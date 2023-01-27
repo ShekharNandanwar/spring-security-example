@@ -1,10 +1,10 @@
 package com.shekhar.springsecurityclient.service;
 
 import com.shekhar.springsecurityclient.entity.PasswordResetToken;
-import com.shekhar.springsecurityclient.repository.PasswordResetTokenRepository;
 import com.shekhar.springsecurityclient.entity.User;
 import com.shekhar.springsecurityclient.entity.VerificationToken;
 import com.shekhar.springsecurityclient.model.UserModel;
+import com.shekhar.springsecurityclient.repository.PasswordResetTokenRepository;
 import com.shekhar.springsecurityclient.repository.UserRepository;
 import com.shekhar.springsecurityclient.repository.VerificationTokenRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -102,6 +102,11 @@ public class UserServiceImpl implements UserService{
     public void changePassword(User user, String newPassword) {
         user.setPassword(passwordEncoder.encode(newPassword ));
         userRepository.save(user);
+    }
+
+    @Override
+    public boolean checkIfValidOldPassword(User user, String oldPassword) {
+        return passwordEncoder.matches(oldPassword, user.getPassword());
     }
 
 }

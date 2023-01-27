@@ -72,12 +72,21 @@ public class UserController {
         }
         Optional<User> user = userService.getUserByPasswordResetToken(token);
         if(user.isPresent()){
-
             userService.changePassword(user.get(),passwordModel.getNewPassword());
             return "password reset successfully";
         }else{
             return "invalid Token";
         }
+    }
+
+    @PostMapping("/changePassword")
+    private String changePassword(@RequestBody PasswordModel passwordModel){
+        User user = userService.findUserByEmail(passwordModel.getEmail());
+        if(!userService.checkIfValidOldPassword(user,passwordModel.getOldPassword())){
+            return "Invalid Old Password";
+        }
+        userService.changePassword(user,passwordModel.getNewPassword());
+        return "Password changed successfully";
     }
 
     private String passwordResetTokenMail(User user, String token, String applicationUrl) {

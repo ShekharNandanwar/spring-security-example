@@ -20,7 +20,8 @@ public class WebSecurityConfig {
             "/verifyRegistration*",
             "/resendVerification*",
             "/resetPassword*",
-            "/savePassword*"
+            "/savePassword*",
+            "/changePassword"
     };
     @Bean
     public PasswordEncoder passwordEncoder(){
