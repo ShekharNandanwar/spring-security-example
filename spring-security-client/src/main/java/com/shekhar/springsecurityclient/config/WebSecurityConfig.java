@@ -15,7 +15,12 @@ public class WebSecurityConfig {
 
     private static final String[] WHITE_LIST_URL = {
             "/hello",
-            "/registration"
+            "/registration",
+            "/login",
+            "/verifyRegistration*",
+            "/resendVerification*",
+            "/resetPassword*",
+            "/savePassword*"
     };
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -30,7 +35,7 @@ public class WebSecurityConfig {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/*").permitAll();
+                .requestMatchers(WHITE_LIST_URL).permitAll();
         return httpSecurity.build();
     }
 }
