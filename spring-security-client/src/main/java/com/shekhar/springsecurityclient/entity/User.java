@@ -25,6 +25,9 @@ public class User {
     public Long userId;
     public String firstName;
     public String lastName;
+    @Column(
+            length = 60
+    )
     public String email;
     public String password;
     public String role;
